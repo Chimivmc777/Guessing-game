@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#define MAX_ATTEMPTS 10
+int getUserChoice() {
+    int choice;
+    printf("\nWould you like to play again? (1 for Yes / 0 for No): ");
+    scanf("%d", &choice);
+    return choice;
+}
+int generateRandomNumber() {
+    return rand() % 100 + 1; 
+}
+int isClose(int number, int guess) {
+    return (abs(number - guess) <= 5); 
+}
+int main() {
+    int number, guess, attempts;
+    int playAgain = 1; 
+    srand(time(0));
+    while (playAgain) {
+        number = generateRandomNumber();
+        attempts = 0;
+        printf("\nWelcome to the Enhanced Number Guessing Game!\n");
+        printf("I'm thinking of a number between 1 and 100.\n");
+        printf("You have %d attempts to guess the number.\n", MAX_ATTEMPTS);
+        while (attempts < MAX_ATTEMPTS) {
+            printf("\nEnter your guess: ");
+            scanf("%d", &guess);
+            attempts++;
+if (guess < number) {
+                printf("Too low! Try again.\n");
+                if (isClose(number, guess)) {
+                    printf("You're very close! Try a higher number.\n");
+                }
+            } else if (guess > number) {
+                printf("Too high! Try again.\n");
+                if (isClose(number, guess)) {
+                    printf("You're very close! Try a lower number.\n");
+                }
+} else {
+ printf("Congratulations! You guessed the number %d in %d attempts.\n", number, attempts);
+   break;
+   }
+   if (attempts == MAX_ATTEMPTS) {
+   printf("Sorry, you've reached the maximum number of attempts. The number was %d.\n", number);
+   }
+   }
+ playAgain = getUserChoice();
+ }
+ printf("Thank you for playing! Goodbye!\n");
+return 0;
+}
